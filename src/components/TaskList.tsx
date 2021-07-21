@@ -16,12 +16,17 @@ export function TaskList() {
   const [newTaskTitle, setNewTaskTitle] = useState('');
 
   function handleCreateNewTask(event: ChangeEvent<HTMLInputElement>) {
-    event.preventDefault()
-    // Crie uma nova task com um id random, não permita criar caso o título seja vazio.
-    setNewTaskTitle(event.target.value)
-    const newTask: Task = {id: Math.random(), title: newTaskTitle, isComplete: false }
-    const newTasks: Task[]= [...tasks, newTask]
-    setTasks(newTasks)
+    const title = event.target.value
+    setNewTaskTitle(title)
+    if(newTaskTitle.length > 0){
+      const newTask: Task = {
+        id: Math.random(), 
+        title: newTaskTitle, 
+        isComplete: false 
+      }
+      const newTasks: Task[]= [...tasks, newTask]
+      setTasks(newTasks)
+    }
   }
 
   function handleToggleTaskCompletion(id: number) {
