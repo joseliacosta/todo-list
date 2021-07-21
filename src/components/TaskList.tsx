@@ -3,6 +3,7 @@ import { useState } from 'react'
 import '../styles/tasklist.scss'
 
 import { FiTrash, FiCheckSquare } from 'react-icons/fi'
+import { ChangeEvent } from 'react';
 
 interface Task {
   id: number;
@@ -14,8 +15,13 @@ export function TaskList() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTaskTitle, setNewTaskTitle] = useState('');
 
-  function handleCreateNewTask() {
+  function handleCreateNewTask(event: ChangeEvent<HTMLInputElement>) {
+    event.preventDefault()
     // Crie uma nova task com um id random, não permita criar caso o título seja vazio.
+    setNewTaskTitle(event.target.value)
+    const newTask: Task = {id: Math.random(), title: newTaskTitle, isComplete: false }
+    const newTasks: Task[]= [...tasks, newTask]
+    setTasks(newTasks)
   }
 
   function handleToggleTaskCompletion(id: number) {
